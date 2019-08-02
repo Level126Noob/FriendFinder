@@ -4,7 +4,8 @@
 var waitingArray = [ 
 {
     callerName: "Travis",
-    callerNumber: "000-000-0000"
+    callerNumber: "000-000-0000",
+    callDate: "08/02/2019"
 }];
 
 //exporting the array makes it accesible to other files!
