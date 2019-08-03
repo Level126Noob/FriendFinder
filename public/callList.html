@@ -21,6 +21,59 @@
                 </div>
               </div>
 
+              <div class="card">
+                  <div class="card-header text-center">
+                    <h4>Active Calls <a href="./directory.html"><button type="menu" class="btn btn-primary menu">Return Home</button></a></h4>
+                  </div>
+                  <div class="card-body">
+                    <ul id="callers" class="list-group"></ul>
+                  </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header text-center">
+                      <h4>Calls on hold</h4>
+                    </div>
+                    <div class="card-body">
+                      <ul id="waiting" class="list-group"></ul>
+                    </div>
+                  </div>
 </body>
 
 </html>
+
+<script type="text/javascript">
+//using ajax, and the api url to grab the table data
+
+function getCalls() {
+var currentURL = window.location.origin;
+
+$.ajax({url: currentURL + "/api/active", method: "GET"})
+.done(function(activeData) {
+  console.log("===========================================");
+  console.log("URL: " + currentURL + "/api/active");
+  console.log("===========================================");
+
+  console.log(activeData);
+  console.log("==============================================")
+
+  //now I will create a forloop to loop through and display each caller
+  for(var i = 0; i<activeData.length; i++) {
+
+    var callers = $("<div>");
+    callers.addClass("callers");
+    callers.attr("id", "activeCallers" + i+1)
+    $("#callers").append(callers);
+
+    var callerNumber = i + 1;
+
+    $("#activeCallers" + i + 1).append("<h3>" + callerNumber + "</h3>" + "<h4>Caller Name: " + activeData[i].name + "</h4><br>" + "<h4>Caller Number: " + activeData[i].number + "</h4><br>" + "<h4>Call Time: " + activeData[i].time + "</h4>")
+  }
+})
+}
+getCalls();
+
+
+
+</script>

@@ -3,9 +3,9 @@
 
 var activeArray = [ 
     {
-        callerName: "Travis",
-        callerNumber: "000-000-0000",
-        callDate: "08/02/2019"
+        name: "",
+        number: "",
+        time: ""
     }];
     
     //exporting the array makes it accesible to other files!
