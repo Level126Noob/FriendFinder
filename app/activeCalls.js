@@ -3,9 +3,9 @@
 
 var activeArray = [ 
     {
-        name: "",
-        number: "",
-        time: ""
+        name: "Travis",
+        number: "2168675309",
+        time: "12:00"
     }];
     
     //exporting the array makes it accesible to other files!

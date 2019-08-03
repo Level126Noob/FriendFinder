@@ -1,7 +1,7 @@
 //here we link the data sources that hold arrays of information in your api
 
-var activeData = require("../app/callerData");
-var waitingData = require("../app/activeCalls");
+var activeData = require("../app/activeCalls");
+var waitingData = require("../app/callerData");
 
 //routing
 

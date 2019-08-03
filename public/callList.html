@@ -68,11 +68,48 @@ $.ajax({url: currentURL + "/api/active", method: "GET"})
 
     var callerNumber = i + 1;
 
-    $("#activeCallers" + i + 1).append("<h3>" + callerNumber + "</h3>" + "<h4>Caller Name: " + activeData[i].name + "</h4><br>" + "<h4>Caller Number: " + activeData[i].number + "</h4><br>" + "<h4>Call Time: " + activeData[i].time + "</h4>")
+    $("#activeCallers" + i + 1).append("<h3>" + callerNumber + "</h3>" +
+     "<h4>Caller Name: " + activeData[i].name + "</h4><br>" +
+      "<h4>Caller Number: " + activeData[i].number + "</h4><br>" +
+       "<h4>Call Time: " + activeData[i].time + "</h4>")
   }
 })
 }
+
+//now I will use the same method but with calls waiting
+function getWaiting() {
+
+  var currentURL = window.location.origin;
+
+  $.ajax({url: currentURL + "/api/waiting", method: "GET"})
+  .done(function(waitingData) {
+
+    console.log("===============================");
+  console.log("URL: " + currentURL + "/api/waiting");
+  console.log("================================");
+
+  console.log(waitingData);
+  console.log("=================================");
+
+  for (var i = 0; i<waitingData.length; i++) {
+    var callswaiting = $("<div>");
+      callswaiting.addClass("waiting");
+      callswaiting.attr("id", "allcallswaiting", + i+1)
+      $("#waiting").append(callswaiting);
+
+      var waitingNumber = i + 1;
+
+      $("#allcallswaiting" + i + 1).append("<h3>" + waitingNumber + 
+        "</h3>" + "<h4>Caller Name: " + waitingData[i].name +"</h4><br>" +
+         "<h4>Caller Number: " + waitingData[i].number + "</h4><br>" +
+          "<h4>Call Time: " + waitingData[i].time + "</h4>")
+  }
+
+  })
+ 
+}
 getCalls();
+getWaiting();
 
 
 
