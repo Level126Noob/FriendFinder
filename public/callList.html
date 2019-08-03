@@ -2,115 +2,120 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery.js"></script>
-    <title>Call List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <title>Call List</title>
 </head>
 
 <body>
-        <div class="jumbotron jumbotron-fluid text-center bg-primary">
-                <div class="container">
-                  <h1 class="display-4">Call Lists</h1>
-                  <p class="lead">A list of the active calls on the 10 lines, and the lines waiting.
-                  </p>
-                </div>
-              </div>
+  <div class="jumbotron jumbotron-fluid text-center bg-primary">
+    <div class="container">
+      <h1 class="display-4">Call Lists</h1>
+      <p class="lead">A list of the active calls on the 10 lines, and the lines waiting.
+      </p>
+    </div>
+  </div>
 
-              <div class="card">
-                  <div class="card-header text-center">
-                    <h4>Active Calls <a href="./directory.html"><button type="menu" class="btn btn-primary menu">Return Home</button></a></h4>
-                  </div>
-                  <div class="card-body">
-                    <ul id="callers" class="list-group"></ul>
-                  </div>
-                </div>
+  <div class="card">
+    <div class="card-header text-center">
+      <h4>Active Calls <a href="./directory.html"><button type="menu" class="btn btn-primary menu">Return
+            Home</button></a></h4>
+    </div>
+    <div class="card-body">
+      <ul id="callers" class="list-group"></ul>
+    </div>
+  </div>
 
 
-                <div class="card">
-                    <div class="card-header text-center">
-                      <h4>Calls on hold</h4>
-                    </div>
-                    <div class="card-body">
-                      <ul id="waiting" class="list-group"></ul>
-                    </div>
-                  </div>
+  <div class="card">
+    <div class="card-header text-center">
+      <h4>Calls on hold</h4>
+    </div>
+    <div class="card-body" id="waiting">
+      <ul class="list-group"></ul>
+    </div>
+  </div>
 </body>
 
 </html>
 
 <script type="text/javascript">
-//using ajax, and the api url to grab the table data
+  //using ajax, and the api url to grab the table data
 
-function getCalls() {
-var currentURL = window.location.origin;
+  function getCalls() {
+    var currentURL = window.location.origin;
 
-$.ajax({url: currentURL + "/api/active", method: "GET"})
-.done(function(activeData) {
-  console.log("===========================================");
-  console.log("URL: " + currentURL + "/api/active");
-  console.log("===========================================");
+    $.ajax({
+        url: currentURL + "/api/active",
+        method: "GET"
+      })
+      .done(function (activeData) {
+        console.log("===========================================");
+        console.log("URL: " + currentURL + "/api/active");
+        console.log("===========================================");
 
-  console.log(activeData);
-  console.log("==============================================")
+        console.log(activeData);
+        console.log("==============================================")
 
-  //now I will create a forloop to loop through and display each caller
-  for(var i = 0; i<activeData.length; i++) {
+        //now I will create a forloop to loop through and display each caller
+        for (var i = 0; i < activeData.length; i++) {
 
-    var callers = $("<div>");
-    callers.addClass("callers");
-    callers.attr("id", "activeCallers" + i+1)
-    $("#callers").append(callers);
+          var callers = $("<div>");
+          callers.addClass("callers");
+          callers.attr("id", "activeCallers" + i + 1)
+          $("#callers").append(callers);
 
-    var callerNumber = i + 1;
+          var callerNumber = i + 1;
 
-    $("#activeCallers" + i + 1).append("<h3>" + callerNumber + "</h3>" +
-     "<h4>Caller Name: " + activeData[i].name + "</h4><br>" +
-      "<h4>Caller Number: " + activeData[i].number + "</h4><br>" +
-       "<h4>Call Time: " + activeData[i].time + "</h4>")
-  }
-})
-}
-
-//now I will use the same method but with calls waiting
-function getWaiting() {
-
-  var currentURL = window.location.origin;
-
-  $.ajax({url: currentURL + "/api/waiting", method: "GET"})
-  .done(function(waitingData) {
-
-    console.log("===============================");
-  console.log("URL: " + currentURL + "/api/waiting");
-  console.log("================================");
-
-  console.log(waitingData);
-  console.log("=================================");
-
-  for (var i = 0; i<waitingData.length; i++) {
-    var callswaiting = $("<div>");
-      callswaiting.addClass("waiting");
-      callswaiting.attr("id", "allcallswaiting", + i+1)
-      $("#waiting").append(callswaiting);
-
-      var waitingNumber = i + 1;
-
-      $("#allcallswaiting" + i + 1).append("<h3>" + waitingNumber + 
-        "</h3>" + "<h4>Caller Name: " + waitingData[i].name +"</h4><br>" +
-         "<h4>Caller Number: " + waitingData[i].number + "</h4><br>" +
-          "<h4>Call Time: " + waitingData[i].time + "</h4>")
+          $("#activeCallers" + i + 1).append("<h3>" + callerNumber + "</h3>" +
+            "<h4>Caller Name: " + activeData[i].name + "</h4><br>" +
+            "<h4>Caller Number: " + activeData[i].number + "</h4><br>" +
+            "<h4>Call Time: " + activeData[i].time + "</h4>")
+        }
+      })
   }
 
-  })
- 
-}
-getCalls();
-getWaiting();
+  //now I will use the same method but with calls waiting
+  function getWaiting() {
 
+    var currentURL = window.location.origin;
 
+    $.ajax({
+        url: currentURL + "/api/waiting",
+        method: "GET"
+      })
+      .done(function (waitingData) {
 
+        console.log("===============================");
+        console.log("URL: " + currentURL + "/api/waiting");
+        console.log("================================");
+
+        console.log(waitingData);
+        console.log("=================================");
+
+        for (var i = 0; i < waitingData.length; i++) {
+          var onHold = $("<div>");
+          onHold.addClass("onHold");
+          onHold.attr("id", "waitingCalls", +i + 1)
+          $("#onHold").append(onHold);
+
+          var waitingNumber = i + 1;
+
+          $("#waitingCalls" + i + 1).append("<h3>" + waitingNumber +
+            "</h3>" + "<h4>Caller Name: " + waitingData[i].name + "</h4><br>" +
+            "<h4>Caller Number: " + waitingData[i].number + "</h4><br>" +
+            "<h4>Call Time: " + waitingData[i].time + "</h4>")
+        };
+
+      })
+
+  }
+
+  getCalls();
+  getWaiting();
 </script>
