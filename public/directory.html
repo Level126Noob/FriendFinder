@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery.js"></script>
   <title>Call Directory</title>
 </head>
 
@@ -15,7 +16,7 @@
   <div class="jumbotron jumbotron-fluid text-center bg-primary">
     <div class="container">
       <h1 class="display-4">Call Directory</h1>
-      <p class="lead">This is where you make a call or go to the link to look at the list of calls waiting on the line.
+      <p class="lead">Make a call or go to the link to look at the list of calls waiting on the line.
       </p>
     </div>
   </div>
@@ -24,16 +25,14 @@
     <div class="card-body">
       <h5 class="card-title text-center">Make a call!</h5>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"><input type="text" class="form-control" placeholder="Name" aria-label="Name"
-            aria-describedby="basic-addon1"></li>
-        <li class="list-group-item"><input type="tel" class="form-control" placeholder="Phone Number"
-            aria-label="Number" aria-describedby="basic-addon1"></li>
-        <li class="list-group-item"><input type="datetime-local" class="form-control" placeholder="Date"
-            aria-label="Date" aria-describedby="basic-addon1"></li>
+        <li class="list-group-item"><input type="text" class="form-control" placeholder="Name" id="name"></li>
+        <li class="list-group-item"><input type="tel" class="form-control" placeholder="Phone Number" id="number"></li>
+        <li class="list-group-item"><input type="time" class="form-control" placeholder="Time" id="time"></li>
       </ul>
       <div class="buttons">
-      <button type="submit">Call!</button>
-      <button type="menu">Call List</button>
+      <button type="submit" class="btn btn-primary submit">Call</button>
+      <a href="./callList.html"><button type="menu" class="btn btn-primary menu">Call List</button></a>
+      <a href="./callLog.html"><button type="menu" class="btn btn-primary menu">Call Log</button></a>
     </div>
     </div>
   </div>
@@ -41,3 +40,38 @@
 </body>
 
 </html>
+<script type="text/javascript">
+
+//grabbing caller input
+$(".submit").click(function (e) { 
+  var caller = {
+    name: $("#name").val().trim(),
+    number: $("#number").val().trim(),
+    time: $("#time").val().trim()
+  };
+  console.log(caller);
+
+
+//passing the caller object into a root page using $.post and a currentURL telling me the path I'm on currently
+var currentURL = window.location.origin;
+
+$.post(currentURL + "/api/active", caller, 
+function(data){
+  if(data === true) {
+    alert("Making your call");
+  }
+  
+  if(data === false) {
+    alert("You are being put on hold until a line opens up.")
+  }
+
+  //clearing the value after you hit submit
+  $("#name").val("");
+  $("#number").val("");
+  $("#time").val("");
+  
+});
+return false;
+});
+
+</script>

@@ -26,7 +26,7 @@ app.get("/api/active", function(req, res) {
   app.post("/api/active", function (req, res) {
       //if theres less than 10 calls then there's enough lines to support it
       if (activeData.length < 10) {
-        tableData.push(req.body);
+        activeData.push(req.body);
         res.json(true);
       }
       else {
