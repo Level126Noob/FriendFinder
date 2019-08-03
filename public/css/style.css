@@ -11,3 +11,7 @@ body {
     background-color: transparent;
     text-align: center;
 }
+
+.card {
+    width: 50%;
+}
