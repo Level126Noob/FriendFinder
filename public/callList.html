@@ -101,7 +101,7 @@
         for (var i = 0; i < waitingData.length; i++) {
           var onHold = $("<div>");
           onHold.addClass("onHold");
-          onHold.attr("id", "waitingCalls", +i + 1)
+          onHold.attr("id", "waitingCalls" + i + 1);
           $("#waiting").append(onHold);
 
           var waitingNumber = i + 1;
